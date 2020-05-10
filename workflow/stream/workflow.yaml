@@ -1,7 +1,9 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: stream
+  generateName: stream-
+  labels:
+    name: stream
 spec:
   entrypoint: echo-loop
   templates:

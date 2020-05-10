@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: hello-world-with-parameters-
+spec:
+  entrypoint: alpine
+  arguments:
+    parameters:
+    - name: message
+      value: hello world
+  templates:
+  - name: alpine
+    inputs:
+      parameters:
+      - name: message
+    container:
+      image: alpine:3.11.6
+      command: [echo]
+      args: ["{{inputs.parameters.message}}"]

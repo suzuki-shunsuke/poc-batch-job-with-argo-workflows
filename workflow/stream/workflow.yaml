@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: stream
+spec:
+  entrypoint: echo-loop
+  templates:
+  - name: echo-loop
+    script:
+      image: alpine:3.11.6
+      command: [sh]
+      source: |
+        while true; do
+          date
+          sleep 3
+        done

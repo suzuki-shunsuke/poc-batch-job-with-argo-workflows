@@ -1,0 +1,41 @@
+---
+# the configuration file of cmdx, which is a task runner.
+# https://github.com/suzuki-shunsuke/cmdx
+tasks:
+- name: skaffold
+  short: s
+  usage: Skaffold the workflow
+  flags:
+  args:
+  - name: name
+    usage: workflow name
+    script_envs:
+    - workflow_name
+    required: true
+  script: bash scripts/skaffold-workflow.sh
+- name: pr
+  short: p
+  usage: Create a pull request to run a workflow
+  flags:
+  args:
+  - name: name
+    usage: workflow name
+    script_envs:
+    - workflow_name
+  script: bash scripts/send-pr.sh
+- name: create-parameter
+  usage: Create a parameter file
+  flags:
+  args:
+  - name: name
+    usage: workflow name
+    required: true
+    script_envs:
+    - workflow_name
+  script: bash scripts/create-parameter.sh
+- name: list
+  short: ls
+  usage: List workfows
+  flags:
+  args:
+  script: bash scripts/list-workflow.sh

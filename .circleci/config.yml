@@ -1,0 +1,35 @@
+---
+version: 2.1
+workflows:
+  build:
+    jobs:
+      - build
+
+jobs:
+  build:
+    docker:
+      - image: alpine:3.11.6
+    steps:
+      - run:
+          name: Install tools
+          command: |
+            apk add curl bash
+            curl -sL -o /usr/local/bin/argo https://github.com/argoproj/argo/releases/download/v2.8.0/argo-linux-amd64
+            chmod +x /usr/local/bin/argo
+            argo version
+      - checkout
+      - run:
+          name: Lint manifests
+          command: |
+            argo lint workflow
+      - run:
+          name: Submit
+          command: |
+            if [ "${CIRCLE_BRANCH:-}" != "master" ]; then
+              exit 0
+            fi
+            export OWNER="${CIRCLE_PROJECT_USERNAME}"
+            export REPO="${CIRCLE_PROJECT_REPONAME}"
+            export SHA1="${CIRCLE_SHA1}"
+
+            bash ci/submit-workflow/main.sh

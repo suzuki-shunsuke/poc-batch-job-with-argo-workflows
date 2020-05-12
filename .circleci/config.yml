@@ -16,6 +16,8 @@ jobs:
             apk add curl bash
             curl -sL -o /usr/local/bin/argo https://github.com/argoproj/argo/releases/download/v2.8.0/argo-linux-amd64
             chmod +x /usr/local/bin/argo
+            mkdir ~/.kube
+            touch ~/.kube/config
             # argo version
       - checkout
       - run:

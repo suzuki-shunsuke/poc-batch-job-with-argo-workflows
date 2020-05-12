@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Lint manifests
           command: |
-            argo lint workflow
+            argo --token "$ARGO_TOKEN" lint workflow
       - run:
           name: Submit
           command: |
